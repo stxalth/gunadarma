@@ -80,13 +80,16 @@
                         <a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-truck"></i> <span>Supplier</span></a>
+                        <a href=""><i class="fa fa-thumb-tack"></i> <span>Program Studi</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-users"></i> <span>Customers</span></a>
+                        <a href=""><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fa fa-book"></i> <span>Daftar Kegiatan</span></a>
                     </li>
 
-                    <?php if ($this->session->userdata('level') == 1) { ?>
+                    <?php if ($this->fungsi->user_login()->level == 1) { ?>
                         <li class="header">SETTINGS</li>
                         <li><a href="<?= site_url('user') ?>"><i class="fa fa-user"></i> <span>Users</span></a></li>
                     <?php } ?>
