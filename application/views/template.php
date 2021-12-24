@@ -80,7 +80,7 @@
                         <a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-thumb-tack"></i> <span>Program Studi</span></a>
+                        <a href="<?= site_url('programstudi') ?>"><i class="fa fa-truck"></i> <span>Program Studi</span></a>
                     </li>
                     <li>
                         <a href=""><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
