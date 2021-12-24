@@ -23,4 +23,31 @@ class User_m extends CI_Model
         $query = $this->db->get();
         return $query;
     }
+
+    public function add($post)
+    {
+        // $params['sesuaiyangdifielddatabase'] = $post['sesuainameyangdiform'];
+        $params['username'] = $post['username'];
+        $params['password'] = sha1($post['password']);
+        $params['level'] = $post['level'];
+        $this->db->insert('user', $params);
+    }
+
+    public function edit($post)
+    {
+        $params['username'] = $post['username'];
+        // Jika bagian 'password' tidak kosong, maka post data ke database.
+        if (!empty($post['password'])) {
+            $params['password'] = sha1($post['password']);
+        }
+        $params['level'] = $post['level'];
+        $this->db->where('user_id', $post['user_id']); // tunjuk ke user_id
+        $this->db->update('user', $params); // update data ke tabel 'user'
+    }
+
+    public function del($id)
+    {
+        $this->db->where('user_id', $id);
+        $this->db->delete('user');
+    }
 }
