@@ -8,7 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/skins/_all-skins.min.css">
     <!--[if lt IE 9]>
@@ -19,10 +18,9 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-
     <div class="wrapper">
         <header class="main-header">
-            <a href="<?= base_url('dashboard') ?>" class="logo">
+            <a href="<?= base_url() ?>assets/index2.html" class="logo">
                 <span class="logo-mini"><b>m</b>P</span>
                 <span class="logo-lg"><b>my</b>POS</span>
             </a>
@@ -35,35 +33,6 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown tasks-menu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger">9</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
-                            </ul>
-                        </li>
                         <!-- User Account -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -72,31 +41,17 @@
                                                         ?></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="user-header">
-                                    <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                                    <p>
-                                        <?= $this->fungsi->user_login()->name //sama 
-                                        ?>
-                                        <small><?= $this->fungsi->user_login()->address //sama 
-                                                ?></small>
-                                    </p>
-                                </li>
-                                <!-- Menu Footer-->
-                                <li class="user-footer">
-                                    <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                    </div>
-                                    <div class="pull-right">
-                                        <a href="<?= site_url('auth/logout') ?>" class="btn btn-flat bg-red">Sign out</a>
-                                    </div>
-                                </li>
+                                <div class="pull-right">
+                                    <a href="<?= site_url('auth/logout') ?>" class="btn btn-flat bg-red">Sign out</a>
+                                </div>
                             </ul>
                         </li>
+                    </ul>
+                    </li>
                     </ul>
                 </div>
             </nav>
         </header>
-
         <!-- Left side column -->
         <aside class="main-sidebar">
             <section class="sidebar">
@@ -105,8 +60,7 @@
                         <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle">
                     </div>
                     <div class="pull-left info">
-                        <p><?= ucfirst($this->fungsi->user_login()->username) //untuk menampilkan data user pada bagian pojok KIRI atas 
-                            ?></p>
+                        <p><?= ucfirst($this->fungsi->user_login()->username) ?></p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -122,76 +76,28 @@
                 <!-- sidebar menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
-                    <!-- Untuk bikin menu aktif -->
-                    <li <?= $this->uri->segment(1) == 'dashboard' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
-                        <a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    <li>
+                        <a href=""><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
-                    <!-- Untuk bikin menu aktif -->
-                    <li <?= $this->uri->segment(1) == 'supplier' ? 'class="active"' : '' ?>>
-                        <a href="<?= site_url('supplier') ?>"><i class="fa fa-truck"></i> <span>Supplier</span></a>
+                    <li>
+                        <a href=""><i class="fa fa-truck"></i> <span>Supplier</span></a>
                     </li>
-                    <!-- Untuk bikin menu aktif -->
-                    <li <?= $this->uri->segment(1) == 'customer' ? 'class="active"' : '' ?>>
-                        <a href="<?= site_url('customer') ?>"><i class="fa fa-users"></i> <span>Customers</span></a>
-                    </li>
-                    <!-- Untuk bikin menu aktif -->
-                    <li class="treeview <?= $this->uri->segment(1) == 'category' || $this->uri->segment(1) == 'unit' || $this->uri->segment(1) == 'item' ? 'active' : '' ?>">
-                        <a href="#">
-                            <i class="fa fa-archive"></i>
-                            <span>Products</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <!-- Untuk bikin menu aktif pada bagian sub-menu. Perhatikan bagian <li> -->
-                            <li <?= $this->uri->segment(1) == 'category' ? 'class="active"' : '' ?>><a href="<?= site_url('category') ?>"><i class="fa fa-circle-o"></i> Categories</a></li>
-                            <li <?= $this->uri->segment(1) == 'unit' ? 'class="active"' : '' ?>><a href="<?= site_url('unit') ?>"><i class="fa fa-circle-o"></i> Units</a></li>
-                            <li <?= $this->uri->segment(1) == 'item' ? 'class="active"' : '' ?>><a href="<?= site_url('item') ?>"><i class="fa fa-circle-o"></i> Items</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>Transaction</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sales</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Stock In</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Stock Out</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-pie-chart"></i>
-                            <span>Reports</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Sales</a></li>
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Stocks</a></li>
-                        </ul>
+                    <li>
+                        <a href=""><i class="fa fa-users"></i> <span>Customers</span></a>
                     </li>
 
-                    <?php if ($this->fungsi->user_login()->level == 1) { ?>
+                    <?php if ($this->session->userdata('level') == 1) { ?>
                         <li class="header">SETTINGS</li>
-                        <li><a href="<?= site_url('user') ?>"><i class="fa fa-user"></i> <span>Users</span></a></li>
+                        <li><a href="#"><i class="fa fa-user"></i> <span>Users</span></a></li>
                     <?php } ?>
                 </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
-
         <!-- Content Wrapper -->
         <div class="content-wrapper">
             <?php echo $contents ?>
         </div>
-
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 1.0
@@ -200,24 +106,10 @@
             reserved.
         </footer>
     </div>
-
     <script src="<?= base_url() ?>assets/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="<?= base_url() ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
-
-    <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#table1').DataTable()
-        })
-    </script>
-
-
-
-
 </body>
 
 </html>
