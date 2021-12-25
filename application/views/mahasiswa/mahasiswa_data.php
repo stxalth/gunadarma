@@ -1,12 +1,11 @@
 <section class="content-header">
     <h1>
-        Program
-        Studi
+        Data Mahasiswa
 
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i></a></li>
-        <li class="active">Program Studi</li>
+        <li class="active">Mahasiswa</li>
     </ol>
 </section>
 
@@ -15,9 +14,9 @@
     <?php $this->view('message') ?>
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Data Program Studi</h3>
+            <h3 class="box-title">Data Mahasiswa</h3>
             <div class="pull-right">
-                <a href="<?= site_url('programstudi/add') ?>" class="btn btn-primary">
+                <a href="<?= site_url('mahasiswa/add') ?>" class="btn btn-primary">
                     <i class="fa fa-plus"> Buat</i>
                 </a>
             </div>
@@ -27,20 +26,25 @@
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Kode</th>
-                        <th>Program</th>
+                        <th>NPM</th>
+                        <th>Nama</th>
+                        <th>Program Studi</th>
+                        <th>Angkatan</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $no = 1;
                     foreach ($row->result() as $key => $data) { ?>
                         <tr>
-                            <td style="width:5%;"><?= $no++ ?>.</td>
-                            <td><?= $data->kode ?></td>
-                            <td><?= $data->program ?></td>
+                            <td><?= $no++ ?>.</td>
+                            <td><?= $data->npm ?></td>
+                            <td><?= $data->nama ?></td>
+                            <td><?= $data->program_studi ?></td>
+                            <td><?= $data->angkatan ?></td>
                             <td class="text-center" width="160px">
-                                <a href="<?= site_url('programstudi/edit/' . $data->programstudi_id) ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil">Update</i></a>
-                                <a href="<?= site_url('programstudi/del/' . $data->programstudi_id) ?>" onclick="return confirm('Yakin ingin menghapus?')" class="btn btn-danger btn-xs">
+                                <a href="<?= site_url('mahasiswa/edit/' . $data->mahasiswa_id) ?>" class="btn btn-primary btn-xs"><i class="fa fa-pencil">Update</i></a>
+                                <a href="<?= site_url('mahasiswa/del/' . $data->mahasiswa_id) ?>" onclick="return confirm('Yakin ingin menghapus?')" class="btn btn-danger btn-xs">
                                     <i class="fa fa-trash"> Hapus</i>
                                 </a>
                             </td>
