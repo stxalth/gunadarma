@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="box-body table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" id="table1">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -34,7 +34,7 @@
                     <?php $no = 1;
                     foreach ($row->result() as $key => $data) { ?>
                         <tr>
-                            <td><?= $no++ ?>.</td>
+                            <td style="width:5%;"><?= $no++ ?>.</td>
                             <td><?= $data->username ?></td>
                             <td><?= $data->level == 1 ? "Admin" : "User" ?></td>
                             <td class="text-center" width="160px">

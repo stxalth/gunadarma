@@ -8,6 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/dist/css/skins/_all-skins.min.css">
     <!--[if lt IE 9]>
@@ -17,12 +18,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-purple sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
             <a href="<?= base_url('dashboard') ?>" class="logo">
                 <span class="logo-mini"><b>m</b>P</span>
-                <span class="logo-lg"><b>my</b>POS</span>
+                <span class="logo-lg"><b>Gunadarma</b></span>
             </a>
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
@@ -64,14 +65,6 @@
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-                <form action="#" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Search...">
-                        <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
                 </form>
                 <!-- sidebar menu -->
                 <ul class="sidebar-menu" data-widget="tree">
@@ -80,10 +73,10 @@
                         <a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="<?= site_url('programstudi') ?>"><i class="fa fa-truck"></i> <span>Program Studi</span></a>
+                        <a href="<?= site_url('programstudi') ?>"><i class="fa fa-thumb-tack"></i> <span>Program Studi</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
+                        <a href="<?= site_url('mahasiswa') ?>"><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
                     </li>
                     <li>
                         <a href=""><i class="fa fa-book"></i> <span>Daftar Kegiatan</span></a>
@@ -113,6 +106,15 @@
     <script src="<?= base_url() ?>assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="<?= base_url() ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="<?= base_url() ?>assets/dist/js/adminlte.min.js"></script>
+
+    <script src="<?= base_url() ?>assets/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() ?>assets/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#table1').DataTable()
+        })
+    </script>
 </body>
 
 </html>

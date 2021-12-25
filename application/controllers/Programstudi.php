@@ -54,9 +54,9 @@ class Programstudi extends CI_Controller
             $this->programstudi_m->edit($post);
         }
         if ($this->db->affected_rows() > 0) {
-            echo "<script>alert('Data berhasil disimpan');</script>";
+            $this->session->set_flashdata('success', 'Data berhasil disimpan');
         }
-        echo "<script>window.location='" . site_url('programstudi') . "'</script>";
+        redirect('programstudi');
     }
 
     public function del($id)
@@ -64,8 +64,8 @@ class Programstudi extends CI_Controller
         $this->programstudi_m->del($id);
 
         if ($this->db->affected_rows() > 0) {
-            echo "<script>alert('Data berhasil dihapus');</script>";
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
         }
-        echo "<script>window.location='" . site_url('programstudi') . "'</script>";
+        redirect('programstudi');
     }
 }
