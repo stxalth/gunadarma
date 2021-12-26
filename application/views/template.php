@@ -22,7 +22,7 @@
     <div class="wrapper">
         <header class="main-header">
             <a href="<?= base_url('dashboard') ?>" class="logo">
-                <span class="logo-mini"><b>m</b>P</span>
+                <span class="logo-mini"><b>G</b></span>
                 <span class="logo-lg"><b>Gunadarma</b></span>
             </a>
             <nav class="navbar navbar-static-top">
@@ -79,7 +79,7 @@
                         <a href="<?= site_url('mahasiswa') ?>"><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-book"></i> <span>Daftar Kegiatan</span></a>
+                        <a href="<?= site_url('kegiatan') ?>"><i class="fa fa-book"></i> <span>Daftar Kegiatan</span></a>
                     </li>
 
                     <?php if ($this->fungsi->user_login()->level == 1) { ?>
