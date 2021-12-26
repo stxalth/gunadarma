@@ -29,6 +29,7 @@
                         <th>#</th>
                         <th>Kode</th>
                         <th>Program</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
