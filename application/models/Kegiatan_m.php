@@ -5,7 +5,7 @@ class kegiatan_m extends CI_Model
 {
     public function get($id = null)
     {
-        $this->db->select('kegiatan.*, mahasiswa.npm as mhs_npm, mahasiswa.nama as mhs_nama, mahasiswa.programstudi_id as mhs_program, mahasiswa.angkatan as mhs_angkatan');
+        $this->db->select('kegiatan.*, mahasiswa.npm as mhs_npm, mahasiswa.nama as mhs_nama, mahasiswa.angkatan as mhs_angkatan');
         $this->db->select('mahasiswa.*, programstudi.program as program_studi');
         $this->db->join('mahasiswa', 'mahasiswa.mahasiswa_id = kegiatan.mahasiswa_id');
         $this->db->join('programstudi', 'programstudi.programstudi_id = mahasiswa.programstudi_id');
