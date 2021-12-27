@@ -34,8 +34,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $no = 1;
-                    foreach ($row->result() as $key => $data) { ?>
+                    <!-- <?php $no = 1;
+                            foreach ($row->result() as $key => $data) { ?>
                         <tr>
                             <td><?= $no++ ?>.</td>
                             <td><?= $data->npm ?></td>
@@ -49,10 +49,27 @@
                                 </a>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } ?> -->
                 </tbody>
             </table>
         </div>
     </div>
 
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#table1').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?= site_url('mahasiswa/get_ajax') ?>",
+                "type": "POST"
+            }
+            // "columnDefs": [{
+            //     "targets": [6],
+            //     "className": "text-right"
+            // }]
+        })
+    })
+</script>
