@@ -85,7 +85,7 @@
                         <?php if ($page == 'edit') {
                             if ($row->foto != null) { ?>
                                 <div style="margin-bottom:5px;">
-                                    <img src="<?= base_url('uploads/kegiatan/foto' . $row->foto)  ?>" style="width:80%;">
+                                    <img src="<?= base_url('uploads/kegiatan/' . $row->foto)  ?>" style="width:80%;">
                                 </div>
                         <?php
                             }

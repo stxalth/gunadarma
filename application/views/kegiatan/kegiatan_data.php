@@ -64,7 +64,7 @@
                             <td><?= $data->url ?></td>
                             <td>
                                 <?php if ($data->foto != null) { ?>
-                                    <img src="<?= base_url('uploads/kegiatan/foto/') . $data->foto ?>" style="width: 50px">
+                                    <img src="<?= base_url('uploads/kegiatan/') . $data->foto ?>" style="width: 50px">
                                 <?php } ?>
                             </td>
                             <td><?= $data->surattugas ?></td>
