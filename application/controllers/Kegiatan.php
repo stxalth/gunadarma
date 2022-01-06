@@ -49,9 +49,9 @@ class kegiatan extends CI_Controller
         $this->template->load('template', 'kegiatan/kegiatan_form', $data);
     }
 
-    public function edit()
+    public function edit($id)
     {
-        $id = $this->input->post('id', true);
+        // $id = $this->input->post('id', true);
         $query = $this->kegiatan_m->get($id);
         if ($query->num_rows() > 0) {
             $kegiatan = $query->row();
@@ -78,7 +78,7 @@ class kegiatan extends CI_Controller
 
     public function process()
     {
-        $config['upload_path']      = './uploads/kegiatan/foto';
+        $config['upload_path']      = './uploads/kegiatan/';
         $config['allowed_types']    = 'gif|jpg|png|jpeg';
         $config['max_size']         = 10000;
         $config['file_name']        = 'mahasiswa-' . date('ymd') . '-' . substr(md5(rand()), 0, 10);
@@ -115,7 +115,7 @@ class kegiatan extends CI_Controller
 
                     $kegiatan = $this->kegiatan_m->get($post['id'])->row();
                     if ($kegiatan->foto != null) {
-                        $target_file = './uploads/kegiatan/foto' . $kegiatan->foto;
+                        $target_file = './uploads/kegiatan/' . $kegiatan->foto;
                         unlink($target_file);
                     }
 
@@ -149,13 +149,13 @@ class kegiatan extends CI_Controller
     {
         $kegiatan = $this->kegiatan_m->get($id)->row();
         if ($kegiatan->foto != null) {
-            $target_file = './uploads/kegiatan/foto' . $kegiatan->foto;
+            $target_file = './uploads/kegiatan/' . $kegiatan->foto;
             unlink($target_file);
-        }
-
-        $this->kegiatan_m->del($id);
-        if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', 'Data berhasil dihapus');
+            $this->kegiatan_m->del($id);
+            if ($this->db->affected_rows() > 0) {
+                $this->session->set_flashdata('success', 'Data berhasil dihapus');
+            }
+            redirect('kegiatan');
         }
     }
 }
