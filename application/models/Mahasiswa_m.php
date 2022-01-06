@@ -6,7 +6,7 @@ class Mahasiswa_m extends CI_Model
 
     // start datatables
     var $column_order = array(null, 'npm', 'nama', 'program_studi', 'angkatan'); //set column field database for datatable orderable
-    var $column_search = array('npm', 'nama', 'program_studi', 'angkatan'); //set column field database for datatable searchable
+    var $column_search = array('npm', 'nama', 'angkatan', 'program'); //set column field database for datatable searchable
     var $order = array('mahasiswa_id' => 'asc'); // default order 
 
     private function _get_datatables_query()

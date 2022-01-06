@@ -65,7 +65,7 @@
             "ajax": {
                 "url": "<?= site_url('mahasiswa/get_ajax') ?>",
                 "type": "POST"
-            }
+            },
             // "columnDefs": [{
             //     "targets": [6],
             //     "className": "text-right"
