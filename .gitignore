@@ -1,5 +1,8 @@
 .DS_Store
 
+uploads/kegiatan/foto*
+uploads/kegiatan/mahasiswa*
+
 application/cache/*
 !application/cache/index.html
 

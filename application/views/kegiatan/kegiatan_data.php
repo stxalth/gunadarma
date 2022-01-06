@@ -62,7 +62,11 @@
                             <td><?= $data->tglakhir ?></td>
                             <td><?= $data->sertifpiala ?></td>
                             <td><?= $data->url ?></td>
-                            <td><?= $data->foto ?></td>
+                            <td>
+                                <?php if ($data->foto != null) { ?>
+                                    <img src="<?= base_url('uploads/kegiatan/foto/') . $data->foto ?>" style="width: 50px">
+                                <?php } ?>
+                            </td>
                             <td><?= $data->surattugas ?></td>
                             <td><?= $data->mhs_npm ?></td>
                             <td><?= $data->mhs_nama ?></td>
