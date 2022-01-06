@@ -52,10 +52,12 @@ class kegiatan_m extends CI_Model
             'tglakhir' => $post['tglakhir'],
             'sertifpiala' => $post['sertifpiala'],
             'url' => $post['url'],
-            'foto' => $post['foto'],
             'surattugas' => $post['surattugas'],
             'mahasiswa_id' => $post['mahasiswa'],
         ];
+        if ($post['foto'] != null) {
+            $params['foto'] = $post['foto'];
+        }
         $this->db->where('kegiatan_id', $post['id']);
         $this->db->update('kegiatan', $params);
     }

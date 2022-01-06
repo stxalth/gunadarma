@@ -78,11 +78,66 @@ class kegiatan extends CI_Controller
 
     public function process()
     {
+        $config['upload_path']      = './uploads/kegiatan/foto';
+        $config['allowed_types']    = 'gif|jpg|png|jpeg';
+        $config['max_size']         = 10000;
+        $config['file_name']        = 'mahasiswa-' . date('ymd') . '-' . substr(md5(rand()), 0, 10);
+        $this->load->library('upload', $config);
+
         $post = $this->input->post(null, TRUE);
         if (isset($_POST['add'])) {
-            $this->kegiatan_m->add($post);
+            // $this->kegiatan_m->add($post);
+            if (@$_FILES['foto']['name'] != null) {
+                if ($this->upload->do_upload('foto')) {
+                    $post['foto'] = $this->upload->data('file_name');
+                    $this->kegiatan_m->add($post);
+                    if ($this->db->affected_rows() > 0) {
+                        $this->session->set_flashdata('success', 'Data berhasil disimpan');
+                    }
+                    redirect('kegiatan');
+                } else {
+                    $error = $this->upload->display_error();
+                    $this->session->set_flashdata('error', $error);
+                    redirect('kegiatan/add');
+                }
+            } else {
+                $post['foto'] = null;
+                $this->kegiatan_m->add($post);
+                if ($this->db->affected_rows() > 0) {
+                    $this->session->set_flashdata('success', 'Data berhasil disimpan');
+                }
+                redirect('kegiatan');
+            }
         } else if (isset($_POST['edit'])) {
-            $this->kegiatan_m->edit($post);
+            // $this->kegiatan_m->edit($post);
+            if (@$_FILES['foto']['name'] != null) {
+                if ($this->upload->do_upload('foto')) {
+
+                    $kegiatan = $this->kegiatan_m->get($post['id'])->row();
+                    if ($kegiatan->foto != null) {
+                        $target_file = './uploads/kegiatan/foto' . $kegiatan->foto;
+                        unlink($target_file);
+                    }
+
+                    $post['foto'] = $this->upload->data('file_name');
+                    $this->kegiatan_m->edit($post);
+                    if ($this->db->affected_rows() > 0) {
+                        $this->session->set_flashdata('success', 'Data berhasil disimpan');
+                    }
+                    redirect('kegiatan');
+                } else {
+                    $error = $this->upload->display_errors();
+                    $this->session->set_flashdata('error', $error);
+                    redirect('kegiatan/edit');
+                }
+            } else {
+                $post['foto'] = null;
+                $this->kegiatan_m->edit($post);
+                if ($this->db->affected_rows() > 0) {
+                    $this->session->set_flashdata('success', 'Data berhasil disimpan');
+                }
+                redirect('kegiatan');
+            }
         }
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', 'Data berhasil disimpan');
@@ -92,11 +147,15 @@ class kegiatan extends CI_Controller
 
     public function del($id)
     {
-        $this->kegiatan_m->del($id);
+        $kegiatan = $this->kegiatan_m->get($id)->row();
+        if ($kegiatan->foto != null) {
+            $target_file = './uploads/kegiatan/foto' . $kegiatan->foto;
+            unlink($target_file);
+        }
 
+        $this->kegiatan_m->del($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('success', 'Data berhasil dihapus');
         }
-        redirect('kegiatan');
     }
 }
