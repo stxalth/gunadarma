@@ -47,8 +47,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $no = 1;
-                    foreach ($row->result() as $key => $data) { ?>
+                    <!-- <?php $no = 1;
+                            foreach ($row->result() as $key => $data) { ?>
                         <tr>
                             <td><?= $no++ ?>.</td>
                             <td><?= $data->tahun ?></td>
@@ -60,14 +60,22 @@
                             <td><?= $data->capaian ?></td>
                             <td><?= $data->tglmulai ?></td>
                             <td><?= $data->tglakhir ?></td>
-                            <td><?= $data->sertifpiala ?></td>
+                            <td>
+                                <?php if ($data->sertifpiala != null) { ?>
+                                    <a href="<?= base_url('uploads/kegiatan/') . $data->sertifpiala ?>" class="btn btn-default btn-xs" style="width: 70px"><i class="fa fa-eye"> lihat</i></a>
+                                <?php } ?>
+                            </td>
                             <td><?= $data->url ?></td>
                             <td>
                                 <?php if ($data->foto != null) { ?>
-                                    <img src="<?= base_url('uploads/kegiatan/') . $data->foto ?>" style="width: 50px">
+                                    <img src="<?= base_url('uploads/kegiatan/') . $data->foto ?>" style="width: 80px">
                                 <?php } ?>
                             </td>
-                            <td><?= $data->surattugas ?></td>
+                            <td>
+                                <?php if ($data->surattugas != null) { ?>
+                                    <a href="<?= base_url('uploads/kegiatan/') . $data->surattugas ?>" class="btn btn-default btn-xs" style="width: 70px"><i class="fa fa-eye"> lihat</i></a>
+                                <?php } ?>
+                            </td>
                             <td><?= $data->mhs_npm ?></td>
                             <td><?= $data->mhs_nama ?></td>
                             <td><?= $data->program_studi ?></td>
@@ -79,10 +87,27 @@
                                 </a>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } ?> -->
                 </tbody>
             </table>
         </div>
     </div>
 
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#table1').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?= site_url('kegiatan/get_ajax') ?>",
+                "type": "POST"
+            },
+            // "columnDefs": [{
+            //     "targets": [6],
+            //     "className": "text-right"
+            // }]
+        })
+    })
+</script>

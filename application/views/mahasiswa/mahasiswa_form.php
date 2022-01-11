@@ -41,7 +41,11 @@
                                 'programstudi',
                                 $programstudi,
                                 $selectedprogram,
-                                ['class' => 'form-control']
+                                [
+                                    'class' => 'form-control',
+                                    'required' => 'required'
+                                ],
+
                             ) ?>
                         </div>
 
