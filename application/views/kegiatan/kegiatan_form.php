@@ -71,13 +71,36 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Sertifikat/Piala </label>
-                        <input type="text" name="sertifpiala" value="<?= $row->sertifpiala ?>" class="form-control">
+                        <label>URL </label>
+                        <input type="text" name="url" value="<?= $row->url ?>" class="form-control">
                     </div>
 
                     <div class="form-group">
-                        <label>URL </label>
-                        <input type="text" name="url" value="<?= $row->url ?>" class="form-control">
+                        <label>Sertifikat/Piala</label>
+                        <?php if ($page == 'edit') {
+                            if ($row->sertifpiala != null) { ?>
+                                <div style="margin-bottom:5px;">
+                                    <a href="<?= base_url('uploads/kegiatan/') . $row->sertifpiala ?>" class="btn btn-default btn-xs" style="width: 70px"><i class="fa fa-eye"> lihat</i></a>
+                                </div>
+                        <?php
+                            }
+                        } ?>
+                        <input type="file" name="sertifpiala" class="form-control">
+                        <small>(Biarkan kosong jika tidak ada <?= $page == 'edit' ? 'diganti' : 'ada' ?>)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Surat Tugas</label>
+                        <?php if ($page == 'edit') {
+                            if ($row->surattugas != null) { ?>
+                                <div style="margin-bottom:5px;">
+                                    <a href="<?= base_url('uploads/kegiatan/') . $row->surattugas ?>" class="btn btn-default btn-xs" style="width: 70px"><i class="fa fa-eye"> lihat</i></a>
+                                </div>
+                        <?php
+                            }
+                        } ?>
+                        <input type="file" name="surattugas" class="form-control">
+                        <small>(Biarkan kosong jika tidak ada <?= $page == 'edit' ? 'diganti' : 'ada' ?>)</small>
                     </div>
 
                     <div class="form-group">
@@ -94,10 +117,6 @@
                         <small>(Biarkan kosong jika tidak ada <?= $page == 'edit' ? 'diganti' : 'ada' ?>)</small>
                     </div>
 
-                    <div class="form-group">
-                        <label>Surat Tugas </label>
-                        <input type="text" name="surattugas" value="<?= $row->surattugas ?>" class="form-control">
-                    </div>
 
                     <div class="form-group">
                         <label>Mahasiswa </label>
