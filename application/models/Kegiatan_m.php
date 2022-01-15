@@ -59,6 +59,39 @@ class kegiatan_m extends CI_Model
     }
     // end datatables
 
+    public function get_internasional()
+    {
+        $this->db->from('kegiatan');
+        $this->db->where('Kepesertaan', 'Internasional');
+
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    public function get_nasional()
+    {
+        $this->db->from('kegiatan');
+        $this->db->where('Kepesertaan', 'Nasional');
+
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    public function get_provinsi()
+    {
+        $this->db->from('kegiatan');
+        $this->db->where('Kepesertaan', 'Provinsi');
+
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+    public function get_wilayah()
+    {
+        $this->db->from('kegiatan');
+        $this->db->where('Kepesertaan', 'Wilayah');
+
+        $query = $this->db->get();
+        return $query->num_rows();
+    }
+
     public function get($id = null)
     {
         $this->db->select('kegiatan.*, mahasiswa.npm as mhs_npm, mahasiswa.nama as mhs_nama, mahasiswa.angkatan as mhs_angkatan');

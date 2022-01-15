@@ -35,9 +35,20 @@
                         <input type="text" name="kategori" value="<?= $row->kategori ?>" class="form-control">
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label>Kepesertaan </label>
                         <input type="text" name="kepesertaan" value="<?= $row->kepesertaan ?>" class="form-control">
+                    </div> -->
+
+                    <div class="form-group">
+                        <label>Kepesertaan</label>
+                        <select type="text" name="kepesertaan" class="form-control">
+                            <option value="">-Pilih-</option>
+                            <option value="Internasional" <?= set_value('kepesertaan') == 1 ? "selected" : null ?>>Internasional</option>
+                            <option value="Nasional" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Nasional</option>
+                            <option value="Provinsi" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Provinsi</option>
+                            <option value="Wilayah" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Wiilayah</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
