@@ -11,6 +11,7 @@
 
 <!-- Main content -->
 <section class="content">
+    <?php $this->view('message') ?>
     <div class="box">
         <div class="box-header">
             <h3 class="box-title">Data Users</h3>
@@ -31,8 +32,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $no = 1;
-                    foreach ($row->result() as $key => $data) { ?>
+                    <!-- <?php $no = 1;
+                            foreach ($row->result() as $key => $data) { ?>
                         <tr>
                             <td style="width:5%;"><?= $no++ ?>.</td>
                             <td><?= $data->username ?></td>
@@ -51,10 +52,27 @@
                                 </form>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } ?> -->
                 </tbody>
             </table>
         </div>
     </div>
 
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#table1').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?= site_url('user/get_ajax') ?>",
+                "type": "POST"
+            },
+            // "columnDefs": [{
+            //     "targets": [6],
+            //     "className": "text-right"
+            // }]
+        })
+    })
+</script>

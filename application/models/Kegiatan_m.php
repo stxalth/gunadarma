@@ -5,7 +5,7 @@ class kegiatan_m extends CI_Model
 {
 
     // start datatables
-    var $column_order = array(null, 'tahun', 'kategori', 'kepesertaan', 'namakegiatan', 'jmlpt', 'jmlpeserta', 'capaian', 'tglmulai', 'tglakhir', 'sertifpiala', 'url', 'foto', 'surattugas', 'npm', 'nama', 'program', 'angkatan'); //set column field database for datatable orderable
+    var $column_order = array(null, 'tahun', 'kategori', 'kepesertaan', 'namakegiatan', 'jmlpt', 'jmlpeserta', 'capaian', 'tglmulai', 'tglakhir', 'sertifpiala', 'url', 'foto', 'surattugas', 'npm', 'nama', 'program', 'angkatan', null); //set column field database for datatable orderable
     var $column_search = array('tahun', 'kategori', 'kepesertaan', 'namakegiatan', 'jmlpt', 'jmlpeserta', 'capaian', 'tglmulai', 'tglakhir', 'url', 'npm', 'nama', 'program', 'angkatan'); //set column field database for datatable searchable
     var $order = array('kegiatan_id' => 'asc'); // default order 
 

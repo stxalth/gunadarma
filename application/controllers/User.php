@@ -12,6 +12,32 @@ class User extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    function get_ajax()
+    {
+        $list = $this->user_m->get_datatables();
+        $data = array();
+        $no = @$_POST['start'];
+        foreach ($list as $user) {
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $user->username;
+            $row[] = $user->level == 1 ? "Admin" : "User";
+            // add html for action
+            $row[] = '<a href="' . site_url('user/edit/' . $user->user_id) . '" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i> Update</a>
+                    <a href="' . site_url('user/del/' . $user->user_id) . '" onclick="return confirm(\'Yakin hapus data?\')"  class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> Delete</a>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => @$_POST['draw'],
+            "recordsTotal" => $this->user_m->count_all(),
+            "recordsFiltered" => $this->user_m->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+
     public function index()
     {
 
@@ -34,12 +60,8 @@ class User extends CI_Controller
         $this->form_validation->set_message('required', '%s masih kosong, mohon diisi terlebih dahulu');
         $this->form_validation->set_message('min_length', '%s minimal 5 karakter');
         $this->form_validation->set_message('is_unique', '%s ini sudah dipakai, silahkan ganti');
-        // %s digunakan untuk menunjuk sebuah alias dalam parameter. Misalnya 'Level' pada level
-        // %s bisa diganti dengan {field}
 
         $this->form_validation->set_error_delimiters('<span class="help-block">', "</span>");
-        // set_error_delimiters untuk membuat custom error messages
-        // sehingga tidak perlu membuat custom error pada masing-masing div di dalam view
 
         if ($this->form_validation->run() == FALSE) {
             $this->template->load('template', 'user/user_form_add');
@@ -47,15 +69,15 @@ class User extends CI_Controller
             $post = $this->input->post(null, TRUE);
             $this->user_m->add($post);
             if ($this->db->affected_rows() > 0) {
-                echo "<script>alert('Data berhasil disimpan');</script>";
+                $this->session->set_flashdata('success', 'Data berhasil disimpan');
             }
-            echo "<script>window.location='" . site_url('user') . "'</script>";
+            redirect('user');
         }
     }
 
     public function edit($id)
     {
-        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|callback_username_check');
+        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]');
         if ($this->input->post('password')) {
             $this->form_validation->set_rules('password', 'Password', 'min_length[5]');
             $this->form_validation->set_rules(
@@ -94,31 +116,30 @@ class User extends CI_Controller
             $post = $this->input->post(null, TRUE);
             $this->user_m->edit($post);
             if ($this->db->affected_rows() > 0) {
-                echo "<script>alert('Data berhasil disimpan');</script>";
+                $this->session->set_flashdata('success', 'Data berhasil disimpan');
             }
-            echo "<script>window.location='" . site_url('user') . "'</script>";
+            redirect('user');
         }
     }
-    function username_check()
-    {
-        $post = $this->input->post(null, TRUE);
-        $query = $this->db->query("SELECT * FROM user WHERE username = '$post[username]' AND user_id != '$post[user_id]'");
-        if ($query->num_rows() > 0) {
-            $this->form_validation->set_message('username_check', '%s ini sudah dipakai, silahkan ganti');
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
+    // function username_check()
+    // {
+    //     $post = $this->input->post(null, TRUE);
+    //     $query = $this->db->query("SELECT * FROM user WHERE username = '$post[username]' AND user_id != '$post[user_id]'");
+    //     if ($query->num_rows() > 0) {
+    //         $this->form_validation->set_message('username_check', '%s ini sudah dipakai, silahkan ganti');
+    //         return FALSE;
+    //     } else {
+    //         return TRUE;
+    //     }
+    // }
 
-    public function del()
+    public function del($id)
     {
-        $id = $this->input->post('user_id');
         $this->user_m->del($id);
 
         if ($this->db->affected_rows() > 0) {
-            echo "<script>alert('Data berhasil dihapus');</script>";
+            $this->session->set_flashdata('success', 'Data berhasil dihapus');
         }
-        echo "<script>window.location='" . site_url('user') . "'</script>";
+        redirect('user');
     }
 }
