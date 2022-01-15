@@ -27,10 +27,10 @@ class kegiatan extends CI_Controller
             $row[] = $kegiatan->capaian;
             $row[] = $kegiatan->tglmulai;
             $row[] = $kegiatan->tglakhir;
-            $row[] = $kegiatan->sertifpiala . '<br><a href="' . site_url('uploads/kegiatan/' . $kegiatan->sertifpiala) . '" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Lihat</a>';
+            $row[] = $kegiatan->sertifpiala != null ? '<br><a href="' . site_url('uploads/kegiatan/' . $kegiatan->sertifpiala) . '" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Lihat</a>' : null;
             $row[] = $kegiatan->url;
-            $row[] = $kegiatan->foto  != null ? '<img src="' . base_url('uploads/kegiatan/' . $kegiatan->foto) . '" class="img" style="width:100px">' : null;
-            $row[] = $kegiatan->surattugas . '<br><a href="' . site_url('uploads/kegiatan/' . $kegiatan->surattugas) . '" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Lihat</a>';
+            $row[] = $kegiatan->foto  != null ? '<img src="' . base_url('uploads/kegiatan/' . $kegiatan->foto) . '" class="img" style="width:85px">' : null;
+            $row[] = $kegiatan->surattugas != null ? '<br><a href="' . site_url('uploads/kegiatan/' . $kegiatan->surattugas) . '" class="btn btn-default btn-xs"><i class="fa fa-eye"></i> Lihat</a>' : null;
             $row[] = $kegiatan->mhs_npm;
             $row[] = $kegiatan->mhs_nama;
             $row[] = $kegiatan->program_studi;
@@ -119,6 +119,7 @@ class kegiatan extends CI_Controller
 
     public function process()
     {
+
         $config['upload_path']      = './uploads/kegiatan/';
         $config['allowed_types']    = 'gif|jpg|png|jpeg|pdf';
         $config['max_size']         = 10000;
@@ -136,7 +137,6 @@ class kegiatan extends CI_Controller
                     //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     // }
                     // Bentuk aslinya kaya yg di atas.
-                    // yang di atas itu kalo cuma masukin 1 file, taronya di sini (Line 93-96)
                 } else {
                     $error = $this->upload->display_error();
                     $this->session->set_flashdata('error', $error);
@@ -195,7 +195,6 @@ class kegiatan extends CI_Controller
                     //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     // }
                     // redirect('kegiatan'); 
-                    // kodingan yg dikomen di atas pindah ke line 213-217
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
@@ -215,7 +214,6 @@ class kegiatan extends CI_Controller
                     //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     // }
                     // redirect('kegiatan');
-                    // kodingan yg dikomen di atas pindah ke line 213-217
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
@@ -235,7 +233,6 @@ class kegiatan extends CI_Controller
                     //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
                     // }
                     // redirect('kegiatan');
-                    // kodingan yg dikomen di atas pindah ke line 213-217
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);

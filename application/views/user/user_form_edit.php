@@ -28,6 +28,7 @@
                     <form action="" method="post">
                         <div class="form-group <?= form_error('username') ? "has-error" : null ?>">
                             <label>Username *</label>
+                            <input type="hidden" name="user_id" value="<?= $row->user_id ?>">
                             <input type="text" name="username" value="<?= $this->input->post('username') ?? $row->username ?>" class=" form-control">
                             <?= form_error('username') ?>
                         </div>

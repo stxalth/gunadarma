@@ -37,7 +37,6 @@
                         <!-- User Account -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
                                 <span class="hidden-xs"><?= $this->fungsi->user_login()->username //untuk menampilkan data user pada bagian pojok KANAN atas
                                                         ?></span>
                             </a>
@@ -58,7 +57,7 @@
             <section class="sidebar">
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="<?= base_url() ?>assets/dist/img/user2-160x160.jpg" class="img-circle">
+                        <br></br>
                     </div>
                     <div class="pull-left info">
                         <p><?= ucfirst($this->fungsi->user_login()->username) ?></p>
@@ -69,16 +68,16 @@
                 <!-- sidebar menu -->
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'dashboard' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?= site_url('dashboard') ?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'programstudi' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?= site_url('programstudi') ?>"><i class="fa fa-thumb-tack"></i> <span>Program Studi</span></a>
                     </li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'mahasiswa' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?= site_url('mahasiswa') ?>"><i class="fa fa-mortar-board"></i> <span>Mahasiswa</span></a>
                     </li>
-                    <li>
+                    <li <?= $this->uri->segment(1) == 'kegiatan' || $this->uri->segment(1) == '' ? 'class="active"' : '' ?>>
                         <a href="<?= site_url('kegiatan') ?>"><i class="fa fa-book"></i> <span>Daftar Kegiatan</span></a>
                     </li>
 
