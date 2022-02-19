@@ -69,10 +69,6 @@
                 "url": "<?= site_url('user/get_ajax') ?>",
                 "type": "POST"
             },
-            // "columnDefs": [{
-            //     "targets": [6],
-            //     "className": "text-right"
-            // }]
         })
     })
 </script>

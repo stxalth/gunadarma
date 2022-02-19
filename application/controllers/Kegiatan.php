@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class kegiatan extends CI_Controller
 {
     function __construct()
@@ -119,11 +123,15 @@ class kegiatan extends CI_Controller
 
     public function process()
     {
+        $query_mahasiswa = $this->mahasiswa_m->get();
+        foreach ($query_mahasiswa->result() as $mhs) {
+            $mahasiswa[$mhs->mahasiswa_id] = $mhs->nama;
+        }
 
         $config['upload_path']      = './uploads/kegiatan/';
         $config['allowed_types']    = 'gif|jpg|png|jpeg|pdf';
         $config['max_size']         = 10000;
-        $config['file_name']        = 'mahasiswa-' . date('ymd') . '-' . substr(md5(rand()), 0, 10);
+        $config['file_name']        = 'mahasiswa-' . $mhs->nama . date('ymd') . '-' . substr(md5(rand()), 0, 10);
         $this->load->library('upload', $config);
 
         $post = $this->input->post(null, TRUE);
@@ -132,33 +140,18 @@ class kegiatan extends CI_Controller
             if (@$_FILES['foto']['name'] != null) {
                 if ($this->upload->do_upload('foto')) {
                     $post['foto'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->add($post); 
-                    // if ($this->db->affected_rows() > 0) {
-                    //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
-                    // }
-                    // Bentuk aslinya kaya yg di atas.
                 } else {
                     $error = $this->upload->display_error();
                     $this->session->set_flashdata('error', $error);
                     redirect('kegiatan/add');
                 }
+            } else {
+                $post['foto'] = null;
             }
 
             if (@$_FILES['sertifpiala']['name'] != null) {
                 if ($this->upload->do_upload('sertifpiala')) {
                     $post['sertifpiala'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->add($post);
-                } else {
-                    $error = $this->upload->display_error();
-                    $this->session->set_flashdata('error', $error);
-                    redirect('kegiatan/add');
-                }
-            }
-
-            if (@$_FILES['surattugas']['name'] != null) {
-                if ($this->upload->do_upload('surattugas')) {
-                    $post['surattugas'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->add($post);
                 } else {
                     $error = $this->upload->display_error();
                     $this->session->set_flashdata('error', $error);
@@ -166,13 +159,18 @@ class kegiatan extends CI_Controller
                 }
             } else {
                 $post['sertifpiala'] = null;
-                $post['foto'] = null;
-                $post['surattugas'] = null;
-                $this->kegiatan_m->add($post);
-                if ($this->db->affected_rows() > 0) {
-                    $this->session->set_flashdata('success', 'Data berhasil disimpan');
+            }
+
+            if (@$_FILES['surattugas']['name'] != null) {
+                if ($this->upload->do_upload('surattugas')) {
+                    $post['surattugas'] = $this->upload->data('file_name');
+                } else {
+                    $error = $this->upload->display_error();
+                    $this->session->set_flashdata('error', $error);
+                    redirect('kegiatan/add');
                 }
-                redirect('kegiatan');
+            } else {
+                $post['surattugas'] = null;
             }
             // nah ini karena kita masukin 3 file dalam 1 row, jadi kodingan yg dibawah masukin di sini.
             $this->kegiatan_m->add($post);
@@ -190,11 +188,7 @@ class kegiatan extends CI_Controller
                         unlink($target_file);
                     }
                     $post['foto'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->edit($post);
-                    // if ($this->db->affected_rows() > 0) {
-                    //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
-                    // }
-                    // redirect('kegiatan'); 
+                    $this->kegiatan_m->edit($post);
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
@@ -209,11 +203,7 @@ class kegiatan extends CI_Controller
                         unlink($target_file);
                     }
                     $post['sertifpiala'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->edit($post);
-                    // if ($this->db->affected_rows() > 0) {
-                    //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
-                    // }
-                    // redirect('kegiatan');
+                    $this->kegiatan_m->edit($post);
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
@@ -228,11 +218,7 @@ class kegiatan extends CI_Controller
                         unlink($target_file);
                     }
                     $post['surattugas'] = $this->upload->data('file_name');
-                    // $this->kegiatan_m->edit($post);
-                    // if ($this->db->affected_rows() > 0) {
-                    //     $this->session->set_flashdata('success', 'Data berhasil disimpan');
-                    // }
-                    // redirect('kegiatan');
+                    $this->kegiatan_m->edit($post);
                 } else {
                     $error = $this->upload->display_errors();
                     $this->session->set_flashdata('error', $error);
@@ -254,6 +240,80 @@ class kegiatan extends CI_Controller
             }
             redirect('kegiatan');
         }
+    }
+
+    public function spreadsheet()
+    {
+        $query_kegiatan = $this->kegiatan_m->get_datatables();
+
+        require 'assets/vendor/autoload.php';
+
+        $object = new Spreadsheet();
+        $object->getProperties()->setCreator('Gunadarma');
+        $object->getProperties()->setLastModifiedBy('Gunadarma');
+        $object->getProperties()->setTitle('Daftar Kegiatan');
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NO.');
+        $object->getActiveSheet()->setCellValue('B1', 'TAHUN');
+        $object->getActiveSheet()->setCellValue('C1', 'KATEGORI');
+        $object->getActiveSheet()->setCellValue('D1', 'KEPESERTAAN');
+        $object->getActiveSheet()->setCellValue('E1', 'NAMA KEGIATAN');
+        $object->getActiveSheet()->setCellValue('F1', 'JUMLAH PERGURUAN TINGGI');
+        $object->getActiveSheet()->setCellValue('G1', 'JUMLAH PESERTA');
+        $object->getActiveSheet()->setCellValue('H1', 'CAPAIAN');
+        $object->getActiveSheet()->setCellValue('I1', 'TANGGAL MULAI');
+        $object->getActiveSheet()->setCellValue('J1', 'TANGGAL AKHIR');
+        $object->getActiveSheet()->setCellValue('K1', 'SERTIFIKAT/PIALA');
+        $object->getActiveSheet()->setCellValue('L1', 'URL');
+        $object->getActiveSheet()->setCellValue('M1', 'FOTO');
+        $object->getActiveSheet()->setCellValue('N1', 'SURAT TUGAS');
+        $object->getActiveSheet()->setCellValue('O1', 'NPM');
+        $object->getActiveSheet()->setCellValue('P1', 'NAMA');
+        $object->getActiveSheet()->setCellValue('Q1', 'PROGRAM STUDI');
+        $object->getActiveSheet()->setCellValue('R1', 'ANGKATAN');
+
+        $baris = 2;
+        $no = 1;
+
+        foreach ($query_kegiatan as $kegiatan) {
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $kegiatan->tahun);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $kegiatan->kategori);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $kegiatan->kepesertaan);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $kegiatan->namakegiatan);
+            $object->getActiveSheet()->setCellValue('F' . $baris, $kegiatan->jmlpt);
+            $object->getActiveSheet()->setCellValue('G' . $baris, $kegiatan->jmlpeserta);
+            $object->getActiveSheet()->setCellValue('H' . $baris, $kegiatan->capaian);
+            $object->getActiveSheet()->setCellValue('I' . $baris, $kegiatan->tglmulai);
+            $object->getActiveSheet()->setCellValue('J' . $baris, $kegiatan->tglakhir);
+            $object->getActiveSheet()->setCellValue('K' . $baris, $kegiatan->sertifpiala);
+            $object->getActiveSheet()->setCellValue('L' . $baris, $kegiatan->url);
+            $object->getActiveSheet()->setCellValue('M' . $baris, $kegiatan->foto);
+            $object->getActiveSheet()->setCellValue('N' . $baris, $kegiatan->surattugas);
+            $object->getActiveSheet()->setCellValue('O' . $baris, $kegiatan->mhs_npm);
+            $object->getActiveSheet()->setCellValue('P' . $baris, $kegiatan->mhs_nama);
+            $object->getActiveSheet()->setCellValue('Q' . $baris, $kegiatan->program_studi);
+            $object->getActiveSheet()->setCellValue('R' . $baris, $kegiatan->mhs_angkatan);
+
+            $baris++;
+        }
+
+        $filename = 'Daftar Kegiatan-' . date('y-m-d') . '.xlsx';
+
+        $object->getActiveSheet()->setTitle('Daftar Kegiatan');
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        ob_end_clean();
+        $writer = new Xlsx($object);
+        $writer = IOFactory::createWriter($object, 'Xlsx');
+        $writer->save('php://output');
+
+
+        exit;
     }
 
     public function del($id)

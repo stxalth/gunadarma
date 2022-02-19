@@ -35,20 +35,17 @@
                         <input type="text" name="kategori" value="<?= $row->kategori ?>" class="form-control">
                     </div>
 
-                    <!-- <div class="form-group">
-                        <label>Kepesertaan </label>
-                        <input type="text" name="kepesertaan" value="<?= $row->kepesertaan ?>" class="form-control">
-                    </div> -->
-
                     <div class="form-group">
                         <label>Kepesertaan</label>
-                        <select type="text" name="kepesertaan" class="form-control">
+                        <select type="text" name="kepesertaan" class="form-control <?= form_error('kepesertaan') ? "has-error" : null ?>">
+                            <?php $kepesertaan = $this->input->post('kepesertaan') ? $this->input->post('kepesertaan') : $row->kepesertaan ?>
                             <option value="">-Pilih-</option>
-                            <option value="Internasional" <?= set_value('kepesertaan') == 1 ? "selected" : null ?>>Internasional</option>
-                            <option value="Nasional" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Nasional</option>
-                            <option value="Provinsi" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Provinsi</option>
-                            <option value="Wilayah" <?= set_value('kepesertaan') == 2 ? "selected" : null ?>>Wiilayah</option>
+                            <option value="Internasional" <?= set_value('kepesertaan') == 1 ? "selected" : null ?><?= $kepesertaan == 'Internasional' ? 'selected' : null ?>>Internasional</option>
+                            <option value="Nasional" <?= set_value('kepesertaan') == 2 ? "selected" : null ?><?= $kepesertaan == 'Nasional' ? 'selected' : null ?>>Nasional</option>
+                            <option value="Provinsi" <?= set_value('kepesertaan') == 2 ? "selected" : null ?><?= $kepesertaan == 'Provinsi' ? 'selected' : null ?>>Provinsi</option>
+                            <option value="Wilayah" <?= set_value('kepesertaan') == 2 ? "selected" : null ?><?= $kepesertaan == 'Wilayah' ? 'selected' : null ?>>Wiilayah</option>
                         </select>
+                        <?= form_error('kepesertaan') ?>
                     </div>
 
                     <div class="form-group">

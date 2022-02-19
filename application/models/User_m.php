@@ -59,7 +59,7 @@ class User_m extends CI_Model
         $this->db->select('*');
         $this->db->from('user');
         $this->db->where('username', $post['username']);
-        $this->db->where('password', sha1($post['password'])); //tambahin "sha1" sesuai di databasenya
+        $this->db->where('password', ($post['password'])); //tambahin "sha1" sesuai di databasenya untuk enkripsi
         $query = $this->db->get();
         return $query;
     }
@@ -78,7 +78,7 @@ class User_m extends CI_Model
     {
         // $params['sesuaiyangdifielddatabase'] = $post['sesuainameyangdiform'];
         $params['username'] = $post['username'];
-        $params['password'] = sha1($post['password']);
+        $params['password'] = ($post['password']); //ganti jadi sha1($post['password']) kalo butuh enkripsi
         $params['level'] = $post['level'];
         $this->db->insert('user', $params);
     }
@@ -88,7 +88,7 @@ class User_m extends CI_Model
         $params['username'] = $post['username'];
         // Jika bagian 'password' tidak kosong, maka post data ke database.
         if (!empty($post['password'])) {
-            $params['password'] = sha1($post['password']);
+            $params['password'] = ($post['password']); //ganti jadi sha1($post['password']) kalo butuh enkripsi
         }
         $params['level'] = $post['level'];
         $this->db->where('user_id', $post['user_id']); // tunjuk ke user_id

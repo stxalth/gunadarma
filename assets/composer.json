@@ -25,6 +25,12 @@
     "issues": "https://github.com/almasaeed2010/AdminLTE/issues"
   },
   "require": {
-    "composer/installers": "1.*"
+    "composer/installers": "1.*",
+    "phpoffice/phpspreadsheet": "^1.21"
+  },
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true
+    }
   }
 }
