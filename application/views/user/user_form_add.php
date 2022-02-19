@@ -33,13 +33,8 @@
                         </div>
                         <div class="form-group <?= form_error('password') ? "has-error" : null ?>">
                             <label>Password *</label>
-                            <input type="password" name="password" value="<?= set_value('password') ?>" class="form-control">
+                            <input type="text" name="password" value="<?= set_value('password') ?>" class="form-control">
                             <?= form_error('password') ?>
-                        </div>
-                        <div class="form-group <?= form_error('passconf') ? "has-error" : null ?>">
-                            <label>Password Confirmation *</label>
-                            <input type="password" name="passconf" value="<?= set_value('passconf') ?>" class="form-control">
-                            <?= form_error('passconf') ?>
                         </div>
                         <div class="form-group <?= form_error('level') ? "has-error" : null ?>">
                             <label>Level *</label>

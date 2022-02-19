@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
+require 'assets/vendor/autoload.php';
+
 class mahasiswa extends CI_Controller
 {
     function __construct()
@@ -50,6 +56,7 @@ class mahasiswa extends CI_Controller
         $mahasiswa->npm = null;
         $mahasiswa->nama = null;
         $mahasiswa->angkatan = null;
+        $mahasiswa->programstudi_id = null;
 
         $query_programstudi = $this->programstudi_m->get();
         $programstudi[null] = '-- Pilih --';
@@ -105,6 +112,91 @@ class mahasiswa extends CI_Controller
         }
         redirect('mahasiswa');
     }
+
+    public function spreadsheet()
+    {
+        $query_mahasiswa = $this->mahasiswa_m->get_datatables();
+
+        $object = new Spreadsheet();
+        $object->getProperties()->setCreator('Gunadarma');
+        $object->getProperties()->setLastModifiedBy('Gunadarma');
+        $object->getProperties()->setTitle('Daftar Mahasiswa');
+
+        $object->setActiveSheetIndex(0);
+
+        $object->getActiveSheet()->setCellValue('A1', 'NO.');
+        $object->getActiveSheet()->setCellValue('B1', 'NPM');
+        $object->getActiveSheet()->setCellValue('C1', 'NAMA');
+        $object->getActiveSheet()->setCellValue('D1', 'PROGRAM STUDI');
+        $object->getActiveSheet()->setCellValue('E1', 'ANGKATAN');
+
+        $baris = 2;
+        $no = 1;
+
+        foreach ($query_mahasiswa as $mahasiswa) {
+            $object->getActiveSheet()->setCellValue('A' . $baris, $no++);
+            $object->getActiveSheet()->setCellValue('B' . $baris, $mahasiswa->npm);
+            $object->getActiveSheet()->setCellValue('C' . $baris, $mahasiswa->nama);
+            $object->getActiveSheet()->setCellValue('D' . $baris, $mahasiswa->program_studi);
+            $object->getActiveSheet()->setCellValue('E' . $baris, $mahasiswa->angkatan);
+
+            $baris++;
+        }
+
+        $filename = 'Daftar Mahasiswa-' . date('y-m-d') . '.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="' . $filename . '"');
+        header('Cache-Control: max-age=0');
+        ob_end_clean();
+        $writer = new Xlsx($object);
+        $writer = IOFactory::createWriter($object, 'Xlsx');
+        $writer->save('php://output');
+
+
+        exit;
+    }
+
+    // public function spreadsheet_import()
+    // {
+    //     $upload_file = $$_FILES['upload_file']['name'];
+    //     $extension = pathinfo($upload_file, PATHINFO_EXTENSION);
+    //     if ($extension == 'csv') {
+    //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+    //     } else if ($extension == 'xls') {
+    //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+    //     } else {
+    //         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+    //     }
+    //     $spreadsheet = $reader->load($_FILES['upload_file']['tmp_name']);
+    //     $sheetdata = $spreadsheet->getActiveSheet()->toArray();
+    //     $sheetcount = count($sheetdata);
+    //     if ($sheetcount > 1) {
+    //         $data = array();
+    //         $no = 1;
+    //         for ($i = 1; $i < $sheetcount; $i++) {
+    //             $no++;
+    //             $npm = $sheetdata[$i][1];
+    //             $nama = $sheetdata[$i][2];
+    //             $programstudi = $sheetdata[$i][3];
+    //             $angkatan = $sheetdata[$i][4];
+    //             $data[] = array(
+    //                 'npm' => $npm,
+    //                 'nama' => $nama,
+    //                 'programstudi_id' => $programstudi,
+    //                 'angkatan' => $angkatan,
+    //             );
+    //         }
+    //         $inserdata = $this->mahasiswa_m->insert_batch($data);
+    //         if ($inserdata) {
+    //             $this->session->set_flashdata('success', 'Data berhasil disimpan');
+    //             redirect('mahasiswa');
+    //         } else {
+    //             $this->session->set_flashdata('message', 'Data tidak dipload. Mohon coba lagi');
+    //             redirect('mahasiswa');
+    //         }
+    //     }
+    // }
 
     public function del($id)
     {

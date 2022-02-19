@@ -20,6 +20,21 @@
                     <i class="fa fa-plus"> Buat</i>
                 </a>
             </div>
+            <br>
+            <!-- <br></br>
+            <form method="post" action="<?= site_url('mahasiswa/spreadsheet_import') ?>" enctype="multipart/form-data" class="form-inline">
+                <div class="form-group" style="width: 400px">
+                    <p>Import Data CSV/Excel</p>
+                    <input type="file" name="upload_file" class="form-control" id="upload_file" placeholder="Import CSV/Excel">
+                    <input type="submit" name="submit" class="btn btn-primary">
+                </div>
+            </form> -->
+            <br>
+            <div class="pull-left">
+                <a href="<?= site_url('mahasiswa/spreadsheet') ?>" class="btn btn-success">
+                    <i>Export Excel</i>
+                </a>
+            </div>
         </div>
         <div class="box-body table-responsive">
             <table class="table table-bordered table-striped" id="table1">

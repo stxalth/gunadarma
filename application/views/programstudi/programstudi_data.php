@@ -21,6 +21,20 @@
                     <i class="fa fa-plus"> Buat</i>
                 </a>
             </div>
+            <br></br>
+            <form method="post" action="<?= site_url('programstudi/spreadsheet_import') ?>" enctype="multipart/form-data" class="form-inline">
+                <div class="form-group" style="width: 100%">
+                    <p>Import Data CSV/Excel</p>
+                    <input type="file" name="upload_file" class="form-control" id="upload_file" placeholder="Import CSV/Excel">
+                    <input type="submit" name="submit" class="btn btn-primary">
+                </div>
+            </form>
+            <br>
+            <div class="pull-left">
+                <a href="<?= site_url('programstudi/spreadsheet') ?>" class="btn btn-success">
+                    <i>Export Excel</i>
+                </a>
+            </div>
         </div>
         <div class="box-body table-responsive">
             <table class="table table-bordered table-striped" id="table1">
@@ -33,8 +47,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $no = 1;
-                    foreach ($row->result() as $key => $data) { ?>
+                    <!-- <?php $no = 1;
+                            foreach ($row->result() as $key => $data) { ?>
                         <tr>
                             <td style="width:5%;"><?= $no++ ?>.</td>
                             <td><?= $data->kode ?></td>
@@ -46,10 +60,27 @@
                                 </a>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php } ?> -->
                 </tbody>
             </table>
         </div>
     </div>
 
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('#table1').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "<?= site_url('programstudi/get_ajax') ?>",
+                "type": "POST"
+            },
+            // "columnDefs": [{
+            //     "targets": [6],
+            //     "className": "text-right"
+            // }]
+        })
+    })
+</script>

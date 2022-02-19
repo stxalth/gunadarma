@@ -23,7 +23,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                    <?php // echo validation_errors(); 
+                    <?php
                     ?>
                     <form action="" method="post">
                         <div class="form-group <?= form_error('username') ? "has-error" : null ?>">
@@ -32,15 +32,9 @@
                             <input type="text" name="username" value="<?= $this->input->post('username') ?? $row->username ?>" class=" form-control">
                             <?= form_error('username') ?>
                         </div>
-                        <div class="form-group <?= form_error('password') ? "has-error" : null ?>">
+                        <div class="form-group">
                             <label>Password *</label>
-                            <input type="password" name="password" value="<?= set_value('password') ?>" class="form-control">
-                            <?= form_error('password') ?>
-                        </div>
-                        <div class="form-group <?= form_error('passconf') ? "has-error" : null ?>">
-                            <label>Password Confirmation *</label>
-                            <input type="password" name="passconf" value="<?= set_value('passconf') ?>" class="form-control">
-                            <?= form_error('passconf') ?>
+                            <input type="text" name="password" value="<?= $this->input->post('password') ?? $row->password ?>" class="form-control">
                         </div>
                         <div class="form-group <?= form_error('level') ? "has-error" : null ?>">
                             <label>Level *</label>

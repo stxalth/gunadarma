@@ -69,6 +69,16 @@ class Mahasiswa_m extends CI_Model
         return $query;
     }
 
+    public function insert_batch($data)
+    {
+        $this->db->insert_batch('mahasiswa', $data);
+        if ($this->db->affected_rows() > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public function add($post)
     {
         $params = [
